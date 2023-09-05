@@ -182,38 +182,69 @@ export class AppComponent {
       }
 
       index++
-      
+
+    })
+
+    /*
+    * setting with parent config is optional.
+    * if user sent the config with a parent (isParent = true),
+    * the "groupRealigner" re-aligns the structure.
+    */
+    if (this.gridConfig.ElementConfig.filter(x => x.IsParent).length > 0) {
+
+      // (this .Controller.nativeElement as HTMLELement).classList.add("d-container-none")
+      let rwoGroupIndexes = this.getGroups().filter(this.onlyUnique)
+
+      this.groupRealigner(rwoGroupIndexes)
+    }
+  }
+
+  /*
+  * removes the grouped children and adds them inside their parent.
+  * parent row(start / end) and col(start / end) are based on his child's configs
+  * indexes is available Ids that user used in ElementConfig as GroupId or GroupId
+  */
+  groupRealigner(indexes: number[]) {
+    let allMother = (this.AllMother.nativeElement) as Element;
+
+    indexes.forEach(index => {
+
+      //this number is a trick; every first 'gridowStart' and 'gridColumnStart has to be assign to variable in 'gettingGrids' (goto) below.
+      //in 'gettingGrids', we check for smallest 'gridowStart" and gridColumnStart; of course they are smaller than 9999
+      let rowStart: number = 9999;
+      let colStart: number = 9999;
+
+      //this number is a trick; every last 'gridRowEnd and 'gridColumnEnd' has to be assign to variable in 'gettingGrids* (goto) below
+      //in 'gettingGrids' we check for smallest 'gridRowEnd" and 'gridColumnEnd'; of course they are bigger than 0 
+      let rowEnd: number = 0
+      let colEnd: number = 0
+
+      let parentConfig: ElementConfig;
+
+      let indexedChildren = allMother.querySelectorAll(" container-child-" + index)
+
+      if (indexedChildren.length < 2) return;
+
+      let span = document.createElement('span');
+
+
+      Array.from(indexedChildren).forEach(element => {
+        span.appendChild(element);
+
+        const elementGridArea = (element as HTMLElement).style.gridArea.split(" / ");
+
+        /*
+        * getting parent's row and col from his children.
+        * the very first row and col is the smallest one
+        * and the last col and row which contains all children, is the biggest one
+        */
+      })
     })
   }
 }
 
 
-/*
-* setting with parent config is optional.
-* if user sent the config with a parent (isParent = true),
-* the "groupRealigner" re-aligns the structure.
-#/
-if (this.gridConfig .ElementConfig-filter(x => ›.IsParent). length >
-0)
-// (this .Controller.nativeElement as HTMLELement).classList.add("d-container-none")
-let rwoGroupIndexes = this getGroups).filter(this.onlyUnique)
-this.groupRealigner(rwoGroupIndexes)
-7*
-* removes the grouped children and adds them inside their parent.
-* parent row(start/end) and col(start/end) are based on his child's configs
-* indexes is available Ids that user used in ElementConfig as GroupId or GroupId
-*/
-groupRealigner (Indexes: number[I) {
-let allother = (this.AllMother .nativeElement) as Element
-indexes. forEach (index => {
-//this number is a trick; every first 'gridowStart' and 'gridColumnStart has to be assign to variable in 'gettingGrids' (goto) below.
-//in 'gettingGrids', we check for smallest 'gridowStart" and gridColumnStart; of course they are smaller than 9999
-let rowStart: number = 9999;
-Let colStart: number = 9999;
-//this number is a trick; every last 'gridRowEnd and 'gridColumnEnd' has to be assign to variable in 'gettingGrids* (goto) belon //in 'gettingGrids' we check for smallest 'gridRowEnd" and 'gridColumnEnd'; of course they are bigger than 0 let rowEnd: number let colEnd: number
-let parentConfig: ElementConfig;
-let indexedChildren - allother.querySelectorALL(" container-child-" + index)
-1f (IndexedChildren. Length < 2) return;
-let span = document. createElement ('span ');
+
+
 
 
