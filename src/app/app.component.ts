@@ -141,3 +141,34 @@ export class AppComponent {
 
   }
 }
+
+
+(Array.from (allMother. children).filter(x -> Ix.classList.contains("controller"))).forEach(element =>
+(element as HTMLELement) .style.gridArea = generatedList [index]
+if (this.gridConfig. ElementConfig .length = 0) return
+//adding handles
+// if CIthis.gridConfig. ElementConfig. some(x => x. IsParent)) {
+/if we have config for handle, add it; else, add default locations let handLeLocation - [this.gridConfig. ElementConfig [index] .HandleLocationx 3 this.gridConfig.ELementConfig[index] .HandleLocationX : HandleXEnum.right, this.gridConfig.ElementConfig[index].HandleLocationY?this.gridConfig.ElementConfig[index].HandleLocationY:HandLeVEnum.bottom]
+this. handleGenerator (element, handleLocation, this.gridConfig .ElementConfig[index] .Resizable)
+// }
+// let fillHeight: boolean = this.gridConfig. ElementConfig [index] .FillHeight;
+// let fillwidth: boolean = this .gridConfig. ElementConfig [index] .Fillwidth;
+let hidden: boolean = this.gridConfig. ElementConfig [index].Hidden;
+// iF (fillHeight) {
+//
+//
+element.classList.add("f1ll-height");
+let elm = (element as HTMLElement). parentElement I
+this.resize(elm, axisEnum.y,
+'1', getComputedstyle(elm).gridColumnStart, (rowCount + 1). toString), getComputedstyle(elm) .gridColumnEnd);
+/ if (filwidth) {
+element.classList.add("fill-width")
+let elm = (element as HTMLElement).parentElement!
+this. resize(element as HTMLElement, axisEnum.x, getComputedStyle(elm) .gridRowStart, '1', getComputedStyle(elm) gridRomEnd, (colCount + 1). toString));
+1f (hidden as true) {
+element remove(
+}
+element. classlist.add("basic", "basic-" + (index + 1)) if (this.gridConfig. Element Config [index].GroupId) (
+element .classList.add("container-child-" + this.gridConfig .ElementConfig(index].GroupId)
+index++
+])
