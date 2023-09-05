@@ -339,3 +339,44 @@ export class AppComponent implements OnDestroy, AfterViewInit {
 
   
 }
+7*
+* can be a function
+* returns unique values if you use it in filter:
+* e.g. arrayInstance. filter(this.onlyUnique)
+* e.g. [8, 1, 1, 1, 2, 3, 3, 5, 5, 10] -> [8, 1, 2, 3, 5, 101 (no reordering)
+*/
+onlyUnique (value, index, array: any[D) {
+return array. index0f (value)
+== index
+* get elementConfigs which contains group configs (row or col) and returns a list of them
+* e.g: [1, 1, 1, 2, 3, 3, 5, 5, 10]
+getGroups(): any ] {
+let groupedElements - this.gridConfig. Element Config. filter (x => y.GroupId);
+let groupValues = LI;
+groupedElements. forEach(element = groupValues.push(element. GroupId ? element. GroupId: element.GroupId))
+return groupValues
+}
+/*
+* handle generator only generate handle for one type; 1f parents are available, children has no handle
+* generating the handles of the elements (resizers)
+* className: e.g. ['right',
+"bottom'"]
+* type: differnece between child handles and parent are in their resize method, so check the switch below.
+*/
+handLeGenerator (element: Element, className: string[I, permission: HandleDisplayEnum) {
+let right = document. createElement ("span")
+right.classList.add (className [o right.classList.add('op-0')
+let bottom - document. createElement ("span")
+bottom.classList.add(className[11)
+bottom.classList.add('op-0')
+const verticallouseKeyDown$ = fromEvent (right,
+'mousedown'),
+horizontalMouseKeyDown$
+• fromEvent (bottom,
+"mousedown"
+this.subscription.add (vertical'louseKeyDown$ .subscribe(e => {
+this. HandlerMover (e as MouseEvent, right)
+3))
+.add(horizontalMouseKeyDown$. subscribe(e => {
+this. Handler/over (e as MouseEvent, bottom)
+
