@@ -732,7 +732,34 @@ export class AppComponent implements OnDestroy, AfterViewInit {
 
 
 
-
+* moving the controller box
+*/ moveController0) {
+let ctri = this.Controller. nativeElement as HTMLELement
+let head = ctrl.querySelector".head") as HIMLElement
+const verticalhouseKeyDown$ = fromEvent (head, 'mousedown")
+this.subscription.add(verticalMouseKeyDown$ .subscribe(e =
+this.MouseDrag(e as MouseEvent, head.parentElement parent ELement)
+))
+7*
+*/
+* changing location of the controller box with mouse position in the client
+MouseDrag(e: MouseEvent, handle: HIMLELement) (
+let moveSubs = new Subscription):
+const moves = fromEvent (document, 'mousemove")
+moveSubs.add (moves. subscribe(move
+handle.style.left = (move as MouseEvent) .clientx + 'px*
+const navileight = parseInt (getComputedStyLe(document .querySelector(* ray-navbar-home")) .height. replace("px". ""))
+handle.style.top - ((move as MouseEvent) .clientY - navileight)
++ 'px
+}))
+const keyUp$ = fromEvent (document, 'mouseup")
+this.subscription.add(keyUp$.subscribe((es) => {
+/ handle.style. left = 'unset
+// handle.style.top =
+unset
+¡/use when resized!
+moveSubs.unsubscribe()
+}))
 
 
 
