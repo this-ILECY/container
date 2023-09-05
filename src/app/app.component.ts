@@ -2,7 +2,7 @@ import { UntypedFormGroup } from '@angular/forms';
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { arisEnum, ContainerDisplayllode, HandleDisplayEnun, HandlexEnum, HandleVEnum } from " . /models/container. enum";
+import { AxisEnum, ContainerDisplayMode, HandleDisplayEnum, HandleXEnum, HandleYEnum } from " . /models/container. enum";
 import { ElementConfig, IGridConfig } from './models/grid-config-interface';
 
 
@@ -12,7 +12,7 @@ import { ElementConfig, IGridConfig } from './models/grid-config-interface';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy, AfterViewInit {
   title = 'grid';
 
   public basics: any;
@@ -115,7 +115,7 @@ export class AppComponent {
   configValidator() {
     let childCount = Array.from(((this.AllMother.nativeElement) as Element).children).filter(x => !x.classList.contains("controller")).length;
     if (this.gridConfig.ElementConfig.length != 0 && childCount !== this.gridConfig.ElementConfig.filter(x => !x.IsParent).length && (!this.gridConfig.AutoTemplate))
-      throw new Error("Uncaught (in promise): TypeError: count of configs did not match your page. \nat Ray-Container. InPlease make sure you have added correct configuration");
+      throw new Error("Uncaught (in promise): TypeError: count of configs did not match your page. \nat cy-Container. InPlease make sure you have added correct configuration");
   }
 
   private rowCountController = 0;
@@ -151,7 +151,7 @@ export class AppComponent {
 
       //if we have config for handle, add it; else, add default locations 
       let handleLocation = [this.gridConfig.ElementConfig[index].HandleLocationX ? this.gridConfig.ELementConfig[index].HandleLocationX : HandleXEnum.right,
-      this.gridConfig.ElementConfig[index].HandleLocationY ? this.gridConfig.ElementConfig[index].HandleLocationY : HandLeVEnum.bottom]
+      this.gridConfig.ElementConfig[index].HandleLocationY ? this.gridConfig.ElementConfig[index].HandleLocationY : HandleYEnum.bottom]
 
       this.handleGenerator(element, handleLocation, this.gridConfig.ElementConfig[index].Resizable)
       // }
@@ -238,30 +238,39 @@ export class AppComponent {
         * the very first row and col is the smallest one
         * and the last col and row which contains all children, is the biggest one
         */
+        gettingGrids:
+        rowStart = rowStart > parseInt(elementGridArea[0]) ? parseInt(elementGridArea[0]) : rowStart;
+        colStart = colStart > parseInt(elementGridArea[1]) ? parseInt(elementGridArea[1]) : colStart;
+        rowEnd = rowEnd < parseInt(elementGridArea[2]) ? parseInt(elementGridArea[2]) : rowEnd;
+        colEnd = colEnd < parseInt(elementGridArea[3]) ? parseInt(elementGridArea[3]) : colEnd;
+
+
+        const elementClassList = Array.from(element.classList).find(x => x.includes("container-child-"));
+        const containerClass = elementClassList?.split("-")
+        parentConfig = this.gridConfig.ElementConfig.find(x => x.parentId === parseInt(containerClass![2]))
+
       })
-    })
+
+      this.relocateChildren(Array.from(indexedChildren))
+
+      if (!parentConfig) return
+
+      span.style.gridArea = "unset !important";
+      span.style.gridArea = rowStart + " / " + colStart + " / " + rowEnd + " / " + colEnd;
+      span.style.gridTemplateRows = 'repeat(' + (rowEnd - rowStart).toString() + ')';
+      span.style.gridTemplateColumns = 'repeat(' + (colEnd - colStart).toString() + ')';
+
+      span.classList.add("cy-container-parent")
+
+      if (parentConfig.GroupId)
+        span.classList.add("container-child-" + parentConfig.GroupId)
+
+      allMother.appendChild(span);
+
+      this.handleGenerator(span, [HandleXEnum.right, HandleXEnum.bottom], parentConfig ? parentConfig.Resizable : HandleDisplayEnum.none)
+    });
+
   }
+  
 }
-
-
-
-Are-rroncandessucnaLoren..forEachCelement=»
-Span .appendChild(element);
-const elementGridArea = (element as HTMLELement) .style.gridArea.split(" / ");
-getting parent's row and col from his children.
-* the very first rom and col is the smallest one
-* and the last col and row which contains all children, is the biggest one
-*/ gettingGrids:
-rorstart - rowstart > parseInt(elementGridArea[e) 2 parseInt (elementGridArea[el) : rowStart;
-colstart = colstart > parseInt(elementGridArea[11) 2 parseInt (elementGridArea[11) : colStart;
-TOmEnd = rowEnd < parseInt(elementGridArea [2) 7 parseInt(elementGridArea[2]) : rowEnd;
-colEnd = colEnd < parseInt (elementGridArea [31) ? parseInt (elementGridArea[3]) : colEnd;
-const elementCLasslist = Array.from(element .classList).find(x => x. includes("container-child-"))
-const containerClass = elementClasslist.split("-")
-parentConfig = this.gridConfig. ElementConfig. find(x => x. Parentid
-a parseInt (containerClass [21));
-this. relocateChildren (Array. from CindexedChildren.))
-1f (IparentConfig) return
-span.style gridArea - 'unset limportant
-
 
