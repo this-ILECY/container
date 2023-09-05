@@ -477,8 +477,8 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     switch (handle.classList.contains('right')) {
       case true: {
         //distance here is space between handle and right side of its child 
-        distance = this.HandleDistanceCalculator(handle, axisEnum.x);
-        distance = this.PixelToCel(distance, axisEnum.x)
+        distance = this.HandleDistanceCalculator(handle, AxisEnum.x);
+        distance = this.PixelToCel(distance, AxisEnum.x)
 
         //i get the gridArea of the child here and modify the 'gridColumnEnd value by adding the distance
         gridArea = getComputedStyle(child!).gridArea.split(" / ")
@@ -493,7 +493,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
         */
         if (parseInt(gridArea[1]) >= parseInt(gridArea[3])) gridArea[3] = (parseInt(gridArea[1]) + 1).toString()
 
-        let neighbor = this.GetNeighbor(child, axisEnum.x);
+        let neighbor = this.GetNeighbor(child!, AxisEnum.x);
 
         if (!neighbor) return
 
@@ -511,8 +511,8 @@ export class AppComponent implements OnDestroy, AfterViewInit {
       }
       case false: {
         //distance here is space between handle and bottom side of its child
-        distance = this.HandleDistanceCalculator(handle, axisEnum.y);
-        distance = this.PixelToCel(distance, axisEnum.y);
+        distance = this.HandleDistanceCalculator(handle, AxisEnum.y);
+        distance = this.PixelToCel(distance, AxisEnum.y);
 
         //i get the gridArea of the child here and modify the 'gridRowEnd' value by adding the distance
         gridArea = getComputedStyle(child!).gridArea.split(" / ");
@@ -527,7 +527,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
         */
         if (parseInt(gridArea[0]) >= parseInt(gridArea[2])) gridArea[2] = (parseInt(gridArea[0]) + 1).toString()
 
-        let neighbor = this.GetNeighbor(child, axisEnum.y);
+        let neighbor = this.GetNeighbor(child!, AxisEnum.y);
 
         if (!neighbor) return
 
@@ -547,61 +547,83 @@ export class AppComponent implements OnDestroy, AfterViewInit {
       default:
         break;
     }
-    
+
     this.ResizeGridArea(child, gridArea);
   }
 
+  /*
+* after any resize, other neighbors must interact;
+* this method returns the neighbor
+* just give her the resized child.
+*/
+  GetNeighbor(child: HTMLElement, axis: AxisEnum): any {
+    let parent = child.parentElement
+    let childGridArea = getComputedStyle(child).gridArea.split(" / ")
+
+    let neighbor;
+
+    switch (axis) {
+      case AxisEnum.x: {
+        neighbor = Array.from(parent!.children).find(x => (getComputedStyle(x).gridRowStart) == childGridArea[0] && getComputedStyle(x).gridColumnStart == childGridArea[3])
+        break;
+      }
+      case AxisEnum.y: {
+        neighbor = Array.from(parent!.children).find(x => getComputedStyle(x).gridRowStart == childGridArea[2] && getComputedStyle(x).gridColumnStart == childGridArea[1])
+        break;
+      }
+      default:
+        break;
+    }
+
+    return neighbor;
+
+
+  }
+
+  /*
+  * give it the element and grid area
+  * expanding or collapsing the child and its neighbors is the main resposibility of this method
+  */
+  ResizeGridArea(element: HTMLElement, gridArea: any) {
+    element.style.gridArea = gridArea[0] + " / " + gridArea[1] + " / " + gridArea[2] + " / " + gridArea[3]
+  }
+
+  /*
+  * calculating the distance between handle and its parent
+  * just give the handle to it
+  * returns in pixels.
+  */
+  HandLeDistanceCalculator(handle: HTMLElement, axis: AxisEnum) {
+    let parent = handle.parentElement
+
+    let parentSize;
+    let parentoffset;
+    let handleOffset;
+
+    switch (axis) {
+      case AxisEnum.x: {
+        parentSize = parseInt(getComputedStyle(parent!).width.replace("px", ""))
+        handleOffset = parseInt(getComputedStyle(handle).left.replace("px", ""))
+        parentoffset = parent!.getBoundingClientRect().x
+        break;
+      }
+      case AxisEnum.y: {
+        handleOffset = parseInt(getComputedStyle(handle).top.replace("px", ""))
+        parentSize = parseInt(getComputedStyle(parent!).height.replace("px", ""))
+        parentoffset = parent!.getBoundingClientRect().y
+        break;
+      }
+    }
+  }
 }
 
 
 
 
 
-after any resize, other neighbors must interact;
-* this method returns the neighbor
-* just give her the resized child.
-*/
-GetNeighbor(child: HIMLElement, axis: axisEnun): HIMLELement I
-let parent = child.parentElement
-let childGridArea = getComputedStyle(child) .gridArea.split (" / ")
-let neighbor:
-switch (axis) {
-case axisEnum.x: (
-neighbor = Array.from (parent. children) .find(x => getComputedStyle(x).gridRonStart as childGridArea[e] & getComputedStyLe(x).gridColumnStart = childGridArea[3))
-break;
-]
-case axisEnum.y: {
-neighbor = Array.from(parent. children) .find(x => getComputedStyLe(x).gridRowStart e= childGridArea [2] &G getComputedStyle(x).gridColumnStart = childGridArea [1))
-break;
-default:
-break;
-return neighbor;
-* give it the element and grid area
-* expanding or collapsing the child and its neighbors is the main resposibility of this method
-*/
-ResizeGridArea(element: HTLElement, gridArea; any) {
-element.style.gridArea a gridArea[e] + " / ° + gridArea[I] + " / ° + gridArea[2] + " / » + gridArea [3]
-7*
-calculating the distance between handle and its parent
-* just give the handle to it
-* returns in pixels.
-*/
-HandLeDistanceCalculator(handle: HTMLELement, axis: axisEnun) {
-let parent = handle.parentElement
-let parentSize;
-let parentoffset; let handleOffset;
-switch (axis) {
-case axisEnun.x:
-{
-parentSize = parseInt (getComputedStyle(parent).width.replace ("px"
-ow))
-handle0ffset - parseInt (getComputedStyle(handle) . Left. replace("px" am))
-parentOffset = parent .getBoundingClientRect ().x
-break;
-case axisEnum.y: {
-handleOffset- parseInt (get ComputedStyLe (handle). top.replace("px", ""))
-parentSize = parseInt (getComputedStyle(parent) .height. replace("px
-parentOffset - parent. getBoundingClientRectO).y
-brosto
+
+
+
+
 
 
