@@ -1,18 +1,29 @@
-«div class-"grand-all-mother"> <form [formGroup]="fg">
-«div #allMother class "all-mother resize-sidenav grid-stack"»
-<!- <div class=" child" style="background-color: #ff000050;"> eng-contents</ng-content>
-span (drag)="objectHover ($event)" (mousedown)="objecthouseDown ($event)" class="move"></spans
-<I- «span (mousedown)="widthMouseDown($event)" (drag)="widthliouseMlove($event)" class="right"»/span»
-«Span (mousedown)="heightHouseDown ($event)" (drag)="heightMouse love ($event)" class="bottom">/span> </div>
+<div class="grand-all-mother">
+  <form>
+    <div #allMother class="all-mother resize-sidenav grid-stack">
+      <ng-content></ng-content>
+
+
+
+
+    </div>
+    <div #controller class="controller grid-stack-item" *ngIf="gridConfig.DisplayMode== 1 || gridConfig.DisplayMode">
+      <div class="head-container">
+        <div class="head"></div>
+      </div>
+      <div class="selector">
+        <select (change)="selectedElement($event)" name="" id="">
+          <option angFor="let basic of basics" value="{{basics.id}}">{{basics.name}}</option>
+        </select>
+      </div>
+      <div class="location">
+        <input type="text">
+        <input type="text">
+      </div>
+      <div class="location">
+        <input type="text">
+        <input type="text">
+      </div>
+    </div>
+  </form>
 </div>
-<div #controller class="controller grid-stack-item" *ngIf-"gridConfig.DiSplayflode =- 1 Il gridConfig.Displayflode"> «div class="head-container"> <div class="head"></div> </div»
-<div class="selector"»
-«select (change)="selectedELement (Sevent)" name=m idemn,
-<option angFor-"let basic of basics" value=" (basic.id))"» ((basic.name]]</option> </select> </div»
-«div class="location">
-<ray-input (metadata]="metadata.fields[ 'x-axis']" [formControlNane]="'y-axis*"></ray-input> «ray-input [metadata]="metadata. fields ['y-axis']" [formControlName]=m 'y-axis'"></ray-input>
-¿/div> <div class="location">
-cray-input [metadata]="metadata. fields ['xs-axis']" [formControlName]="''ys-axis'"></ray-input»
-«ray-input (metadata]="metadata. fields ['ys-axis']" [formControlName]=" 'ys-axis° "></ray-input»
-</div> </div»
-</form> </div>
