@@ -271,42 +271,71 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     });
 
   }
+  /*
+  * when you create a parent and add children inside, their grid address (gridArea) goes wrong
+  * cuz the original address is for allMother grid system 
+  * they have to start from 1 in the column and rom
+  * 
+  * example:
+  * child1[6,6,7,7], child2[6,7,7,8]
+  * * when they go to new parent zone, they have to be:
+  * child1[1, 2,2,21, child2[1,2,2,3]
+  */
+  relocateChildren(children: Element[]) {
+
+    // rowStarterChildren is a list for children which their gridRowStart is the smallest
+    // this was a bug which resolved (wrong starting point for children)
+    let rowStarterChildren = [];
+
+
+    // colStarterChildren is a list for children which their gridColumnStart is the smallest
+    // this was a bug which resolved (wrong starting point for children)
+    let colStarterChildren = [];
+
+    // result: min value of gridRowStart of the elements
+    const rowStartMinValue = Math.min(...children.map(element => parseInt((element as HTMLElement).style.gridArea.split(" / ")[0])));
+    rowStarterChildren = children.filter(element => parseInt((element as HTMLElement).style.gridArea.split(" / ")[0]) == rowStartMinValue)
+
+    // result: min value of gridColumnStart of the elements
+    const colStartMinValue = Math.min(...children.map(element => parseInt((element as HTMLElement).style.gridArea.split(" / ")[1])))
+    colStarterChildren = children.filter(element => parseInt((element as HTMLElement).style.gridArea.split(" / ")[1]) == colStartMinValue)
+
+    const mergedList = new Set([...rowStarterChildren, ...colStarterChildren]);
+    mergedList.forEach(start => {
+
+      let smallGrid = (start as HTMLElement).style.gridArea.split(" / ").map(val => { return parseInt(val) });
+      /*
+      * grid area has 4 parts:
+      * gridRonStart:
+      *
+      * gridColumnStart: (the original start) - (min value) + 1
+      * gridRowEnd:(the original ending) - (min value) + 1
+      * gridColumnEnd:(the original ending) - (min value) + 1
+      */
+      (start as HTMLElement).style.gridArea = (smallGrid[0] - rowStartMinValue + 1) + " / " + (smallGrid[1] - colStartMinValue + 1) + " / "
+        + (smallGrid[2] - rowStartMinValue + 1) + " / " + (smallGrid[3] - colStartMinValue + 1)
+    })
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
 }
-* when you create a parent and add children inside, their grid address (gridArea) goes wrong
-* cuz the original address 15 for allMother grid system  they have to start from 1 in the column and rom
-* example:
-* child1[6,6,7,7], child2[6,7,7,8]
-* * when they go to new parent zone, they have to be:
-* child1[1, 2,2,21, child2[1,2,2,3]
-‡ /
-relocateChildren (children: Element[1) {
-// rowStarterChildren is a list for children which their gridRowStart is the smallest
-77 this was a bug which resolved (wrong starting point for children)
-let rowStarterChildren = L1
-/ colStarterChildren is a list for children which their gridColumnStart is the smallest
-// this was a bug which resolved (wrong starting point for children)
-Let colStarterChildren = L]:
-// result: min value of gridRowStart of the elements
-const rouStartilinValue - Math.min(. .. children .map(Celement: HTMLELement) => parseInt(element.style.gridArea.split(" / w3[01)))
-rowStarterChildren = children. filter((element: HTMLELement)
-parseint(element.style.gridArea.split(" / ")[e]) == rovStartilinValue)
-// result: min value of gridColumnStart of the elements
-const colStartrinValue - Math. minC. .children. map((element: HIT'LELement) -> parseInt(element.style.gridArea.split(" / ") [11)))
-colStarterChildren = children. filter ((element: HTMLELement) -> parseInt(element.style.gridArea.split(" / ")[11) =
-colStartMinValue)
-const mergedList - new Set(L. ..rowStarterChildren, • . .colStarterChildren])
-mergedList.forEach(start => {
-let smallGrid = start.style.gridArea.split(" / ").map(val - { return parseInt (val) 1)
-/ *
-* grid area has 4 parts:
-* gridRonStart:
-1
-* gridColumnStart: (the original start) - (min value) + 1
-* gridRowEnd:
-(the original ending) - (min value) + 1
-* gridColumnEnd:
-(the original ending) - (min value) + 1
-start .style. gridArea = (smallGrid[0] - rowStart/inValue + 1) + " / " + (smallGrid[I] - colStart/inValue + 1) + " /
-+ (smallGrid [2]
-- rowStartMinValue + 1) + " / " + (smallGrid [3] - colStartMlinValue + 1)
