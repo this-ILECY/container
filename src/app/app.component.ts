@@ -85,7 +85,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
 
     // this.configValidator()
     this.pageGenerator();
-    this.basics = this.GetListOfCount();
+    // this.basics = this.GetListOfCount();
     if ((this.gridConfig.DisplayMode === ContainerDisplayMode.normal)) {
       this.moveController();
     }
@@ -135,7 +135,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
 
     if (this.gridConfig.ElementConfig.length = 0) return;
 
-    let generatedList = this.listGenerator(this.gridConfig.ElementConfig);
+    let generatedList = this.ListGenerator(this.gridConfig.ElementConfig);
 
     let index = 0;
 
@@ -153,7 +153,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
       let handleLocation = [this.gridConfig.ElementConfig[index].HandleLocationX ? this.gridConfig.ELementConfig[index].HandleLocationX : HandleXEnum.right,
       this.gridConfig.ElementConfig[index].HandleLocationY ? this.gridConfig.ElementConfig[index].HandleLocationY : HandleYEnum.bottom]
 
-      this.handleGenerator(element, handleLocation, this.gridConfig.ElementConfig[index].Resizable)
+      this.handLeGenerator(element, handleLocation, this.gridConfig.ElementConfig[index].Resizable)
       // }
 
       // let fillHeight: boolean = this.gridConfig.ElementConfig [index].FillHeight;
@@ -267,7 +267,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
 
       allMother.appendChild(span);
 
-      this.handleGenerator(span, [HandleXEnum.right, HandleXEnum.bottom], parentConfig ? parentConfig.Resizable : HandleDisplayEnum.none)
+      this.handLeGenerator(span, [HandleXEnum.right, HandleXEnum.bottom], parentConfig ? parentConfig.Resizable : HandleDisplayEnum.none)
     });
 
   }
@@ -477,7 +477,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     switch (handle.classList.contains('right')) {
       case true: {
         //distance here is space between handle and right side of its child 
-        distance = this.HandleDistanceCalculator(handle, AxisEnum.x);
+        distance = this.HandLeDistanceCalculator(handle, AxisEnum.x);
         distance = this.PixelToCel(distance, AxisEnum.x)
 
         //i get the gridArea of the child here and modify the 'gridColumnEnd value by adding the distance
@@ -511,7 +511,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
       }
       case false: {
         //distance here is space between handle and bottom side of its child
-        distance = this.HandleDistanceCalculator(handle, AxisEnum.y);
+        distance = this.HandLeDistanceCalculator(handle, AxisEnum.y);
         distance = this.PixelToCel(distance, AxisEnum.y);
 
         //i get the gridArea of the child here and modify the 'gridRowEnd' value by adding the distance
@@ -734,7 +734,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
 
     this.subscription.add(verticalhouseKeyDown$.subscribe(e => {
 
-      this.MouseDrag(e as MouseEvent, head.parentElement!.parentElement)
+      this.MouseDrag(e as MouseEvent, head.parentElement!.parentElement!)
     }))
 
   }
@@ -770,40 +770,50 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     }))
 
 
-    
+
   }
+
+  /*
+  * any interactions between children and controller box
+  * (WORKS ONY ON NON-DASHBOARD)
+  */
+  private selected: HTMLElement = new HTMLElement;
+  selectedElement(e: Event) {
+    const value = (e.target as HTMLSelectElement).selectedOptions[0].value;
+
+    Array.from((this.AllMother.nativeElement as HTMLElement).querySelectorAll(".basic")).forEach(element => {
+      (element as HTMLElement).style.border = 'unset';
+    });
+    const selectedElement = ((this.AllMother.nativeElement as HTMLElement).querySelector(".basic-" + value) as HTMLElement)
+    selectedElement.style.border = '3px solid #45b653';
+    this.selected = selectedElement;
+
+    const gridArea = getComputedStyle(selectedElement).gridArea.split(" / ")
+
+    // this.fg.get ('x'). setValue(gridArea[ol)
+    // this.fg.get('y').setValue(gridArea[1])
+    // this.fg.get ('xs').setValue(parseInt (gridArea [2]) - parseInt(gridArea [ol))
+    //this.fg.get('ys').setvalue(parseInt(gridArea[3]) - parseInt (gridArea[1)))
+    let a = parseInt(gridArea[0]);
+
+    let aa = parseInt(gridArea[1]);
+
+//     this.fg.patchValue(
+//       {
+//         'x-axis': a,
+//         'y-axis': aa,
+//         'ys-axis*: parseInt (gridArea[21) - parseInt (gridArea[Ol),
+// 'ys-axis': parseInt(gridArea[31) - parseInt(gridArea[13),
+//       D:
+
+//       this.fg.controls['x-axis'].setValue(parseInt(gridArea[el))
+
+//       }
+
 }
 
 
 
-
-
-
-* any interactions between children and controller box
-* (WORKS ONY ON NON-DASHBOARD)
-# / private selected: HIMLELement:
-selectedElement (e: Event) {
-const value = (e.target as HTMLSelectELement) .selectedOptions [0]. value;
-Array.from((this.AllMother .nativeElement as HTMLELement) .querySelectorALI(" basic")).forEach(element ->
-(element as HTMLELement).style.border = 'unset"
-const selectedElement - ((this.ALlMother.nat iveELement as HIMLELement). querySeLector(" .basic-" + value) as HIPLELement)
-selectedElement.style.border = '3px solid #45b6531
-this.selected = selectedElement
-const gridArea = getComputedStyle (selectedElement) .gridArea.split"
-// this.fg.get ('x'). setValue(gridArea[ol)
-// this.fg.get('y').setValue(gridArea[1])
-// this.fg.get ('xs').setValue(parseInt (gridArea [2]) - parseInt(gridArea [ol))
-//this.fg.get('ys').setvalue(parseInt(gridArea[3]) - parseInt (gridArea[1)))
-Let a = parseint (gridArea[0]);
-Let aa - parseInt (gridArea[1):
-this.fg.patchValue(
-{
-'x-axis': a,
-'y-axis': aa,
-'ys-axis*: parseInt (gridArea[21) - parseInt (gridArea[Ol),
-'ys-axis': parseInt (gridArea[31) - parseInt (gridArea[13),
-D:
-this.fg.controls['x-axis'].setValue(parseInt(gridArea[el))
 
 
 
