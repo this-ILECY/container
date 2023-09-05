@@ -717,12 +717,61 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     }
     // if (colEnd.length > 0 II colstart. length > 0) {
 
-    
+
     // ) else if (rowStart. length > 0 II rowEnd. length > 0) {
 
     //}
   }
 
+  /*
+  * moving the controller box
+  */
+  moveController() {
+    let ctrl = this.Controller.nativeElement as HTMLElement
+    let head = ctrl.querySelector(".head") as HTMLElement
+
+    const verticalhouseKeyDown$ = fromEvent(head, 'mousedown')
+
+    this.subscription.add(verticalhouseKeyDown$.subscribe(e => {
+
+      this.MouseDrag(e as MouseEvent, head.parentElement!.parentElement)
+    }))
+
+  }
+
+  /*
+  * changing location of the controller box with mouse position in the client
+  */
+  MouseDrag(e: MouseEvent, handle: HTMLElement) {
+
+    let moveSubs = new Subscription();
+
+    const moves = fromEvent(document, 'mousemove')
+
+    moveSubs.add(moves.subscribe(move => {
+
+      handle.style.left = (move as MouseEvent).clientX + 'px'
+      const navileight = parseInt(getComputedStyle(document.querySelector('cy-navbar-home')!).height.replace("px", ""))
+      handle.style.top = ((move as MouseEvent).clientY - navileight) + 'px'
+
+    }))
+
+    const keyUp$ = fromEvent(document, 'mouseup')
+
+    this.subscription.add(keyUp$.subscribe((es) => {
+
+
+
+      // handle.style. left = 'unset
+      // handle.style.top =unset
+      //use when resized!
+
+      moveSubs.unsubscribe()
+    }))
+
+
+    
+  }
 }
 
 
@@ -732,34 +781,6 @@ export class AppComponent implements OnDestroy, AfterViewInit {
 
 
 
-* moving the controller box
-*/ moveController0) {
-let ctri = this.Controller. nativeElement as HTMLELement
-let head = ctrl.querySelector".head") as HIMLElement
-const verticalhouseKeyDown$ = fromEvent (head, 'mousedown")
-this.subscription.add(verticalMouseKeyDown$ .subscribe(e =
-this.MouseDrag(e as MouseEvent, head.parentElement parent ELement)
-))
-7*
-*/
-* changing location of the controller box with mouse position in the client
-MouseDrag(e: MouseEvent, handle: HIMLELement) (
-let moveSubs = new Subscription):
-const moves = fromEvent (document, 'mousemove")
-moveSubs.add (moves. subscribe(move
-handle.style.left = (move as MouseEvent) .clientx + 'px*
-const navileight = parseInt (getComputedStyLe(document .querySelector(* ray-navbar-home")) .height. replace("px". ""))
-handle.style.top - ((move as MouseEvent) .clientY - navileight)
-+ 'px
-}))
-const keyUp$ = fromEvent (document, 'mouseup")
-this.subscription.add(keyUp$.subscribe((es) => {
-/ handle.style. left = 'unset
-// handle.style.top =
-unset
-¡/use when resized!
-moveSubs.unsubscribe()
-}))
 
 
 
