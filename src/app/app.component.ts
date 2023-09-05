@@ -624,6 +624,53 @@ export class AppComponent implements OnDestroy, AfterViewInit {
 
   }
 
+  /*
+  * a method that converts pixel to cell index.
+  * give it the pixels and the axis.
+  * the method uses the gridConfig -> resolution to calculate that
+  */
+  PixelToCel(pixel: number, axis: AxisEnum) {
+    let cellsize;
+    let allMother = this.AllMother.nativeElement as HTMLElement
+    switch (axis) {
+
+      case AxisEnum.x: {
+        cellsize = parseFloat(getComputedStyle(allMother).gridTemplateColumns.split("/ ")[0].replace("px", ""));
+        break;
+      }
+      case AxisEnum.y: {
+        cellsize = parseFloat(getComputedStyle(allMother).gridTemplateRows.split(" ")[0].replace("px", ""));
+        break;
+      }
+      default:
+        break;
+    }
+
+    return Math.round(pixel / cellsize!)
+  }
+
+  /*
+  * gets row(start/End) and colunn(start/End) from elementConfig and convert into an array of classes
+  * e.g.: ['1/ 2/ 3/ 4', '5/ 4/ 7/ 6', ...]
+  */
+  ListGenerator(sizes: ElementConfig[]): string[] {
+    let base: string = 'x / y / x2 / y2';
+    let list: string[] = []
+
+
+    sizes.forEach(element => {
+
+      if (!element.RowStart) element.RowStart = 0
+      if (!element.RowEnd) element.RomEnd = 0
+      if (!element.ColStart) element.ColStart = 0
+      if (!element.ColEnd) element.ColEnd = 0
+
+      list.push(base.replace('x', element.RowStart.toString()).replace('y', element.ColStart.toString())
+        .replace('2', (element.RowEnd + 1).toString()).replace('y2', (element.ColEnd + 1).toString()))
+    })
+    return list;
+  }
+
   
 }
 
@@ -632,40 +679,8 @@ export class AppComponent implements OnDestroy, AfterViewInit {
 
 
 
-*
-* a method that converts pixel to cell index.
-* give it the pixels and the axis.
-* the method uses the gridConfig -> resolution to calculate that
-*/
-PixelToCel (pixel: number, axis: axisEnun) {
-let cellsize;
-let allother - this.AllMother .nativeElement as HTMLELement
-switch (axis)
-case axisEnum.x: (
-cellSize = parseFloat(getComputedStyle(allrother).gridTemplateColumns.spLit(" " [01 .replace("px*, ""));
-break;
-case axisEnum.y: (
-cellsize = parseFLoat(getComputedstyle(allHother).gridTemplateRows.split(" ")[e] . replace(*px", "")):
-break;
-default:
-break;
-return Math. round (pixel / cellSize)
-/*
-* gets row(start/End) and colunn(start/End) from elementConfig and convert into an array of classes
-* e.g.: ['1/ 2/ 3/ 4°, '5/ 4/ 7/ 6*
-0.1
-* /
-ListGenerator(sizes: ElementConfig[I): string[I {
-let base: string = 'x / y / x2 / y2*
-let list: string) =
-sizes. forEach (element
-1f (lelement.RowStart) element.RowStart = 0
-if (lelement .RowEnd) element. RomEnd a 0
-if (lelement.ColStart) element. ColStart = 0
-1f (lelement.ColEnd) element. ColEnd = 0
-List.push(base.replace('x', element.RowStart. tostring()) .replace('y', element.Colstart. tostring)) replace('*2°, Celement.RowEnd + 19.toString().replace('y2', Celement.ColEnd + 1). toString()))
-3)
-return list;
+
+
 
 
 
