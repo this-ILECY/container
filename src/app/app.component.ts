@@ -611,10 +611,20 @@ export class AppComponent implements OnDestroy, AfterViewInit {
         handleOffset = parseInt(getComputedStyle(handle).top.replace("px", ""))
         parentSize = parseInt(getComputedStyle(parent!).height.replace("px", ""))
         parentoffset = parent!.getBoundingClientRect().y
+
         break;
       }
+
+      default:
+        break;
     }
+
+    return (handleOffset! - parentSize!);
+
+
   }
+
+  
 }
 
 
