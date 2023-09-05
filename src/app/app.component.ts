@@ -489,7 +489,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
         * gridArea[3]: ending column
         * 
         * so:
-        * If the starting column 15 equal or bigger than ending column, it means you are moving the handle further than the size of the child. 
+        * If the starting column is equal or bigger than ending column, it means you are moving the handle further than the size of the child. 
         */
         if (parseInt(gridArea[1]) >= parseInt(gridArea[3])) gridArea[3] = (parseInt(gridArea[1]) + 1).toString()
 
@@ -498,45 +498,65 @@ export class AppComponent implements OnDestroy, AfterViewInit {
         if (!neighbor) return
 
         let neighborGridArea = getComputedStyle(neighbor).gridArea.split(" / ")
+
+        /*
+        * watch this carefully:
+        *
+        * neighbor is in the right side of the child.
+        * so:
+        * gridColStart of the neighbor = gridColEnd of the child
+        */
+        this.ResizeGridArea(neighbor, [neighborGridArea[0], gridArea[3], neighborGridArea[2], neighborGridArea[3]])
+        break;
+      }
+      case false: {
+        //distance here is space between handle and bottom side of its child
+        distance = this.HandleDistanceCalculator(handle, axisEnum.y);
+        distance = this.PixelToCel(distance, axisEnum.y);
+
+        //i get the gridArea of the child here and modify the 'gridRowEnd' value by adding the distance
+        gridArea = getComputedStyle(child!).gridArea.split(" / ");
+        gridArea[2] = (parseInt(gridArea[2] + distance)).toString();
+
+        /*
+        * gridArea[0]: starting row
+        * gridArea[2]: ending row
+        *
+        * so:
+        * if the starting row is equal or bigger than ending row, it means you are moving the handle further than the size of the child.
+        */
+        if (parseInt(gridArea[0]) >= parseInt(gridArea[2])) gridArea[2] = (parseInt(gridArea[0]) + 1).toString()
+
+        let neighbor = this.GetNeighbor(child, axisEnum.y);
+
+        if (!neighbor) return
+
+        let neighborGridArea = getComputedStyle(neighbor).gridArea.split(" / ")
+
+        /*
+        * watch this carefully:
+        * neighbor is in the bottom side of the child.
+        * 
+        * SO:
+        * gridRowStart of the neighbor = gridRomEnd of the child
+        */
+        this.ResizeGridArea(neighbor, [gridArea[2], neighborGridArea[1], neighborGridArea[2], neighborGridArea[3]])
+        break;
       }
 
+      default:
+        break;
     }
+    
+    this.ResizeGridArea(child, gridArea);
   }
 
-
-
-* watch this carefully:
-* neighbor is in the right side of the child.
-* 50:
-* gridColStart of the neighbor = gridColEnd of the child
-*/
-this.ResizeGridArea(neighbor, [neighborGridAreaf01, gridAreaf31, neighborGridArea[21, neighborGridArea[311) break;
-case false: {
-//distance here is space between handle and bottom side of its child
-distance = this.HandleDistanceCalculator(handle, axisEnum.y) ;
-distance = this. PixelToCel (distance, axisEnum.y)
-7/1 get the gridArea of the child here and modify the 'gridRowEnd' value by adding the distance
-gridArea = getComputedStyle (child) .gridArea.split(" / ")
-gridArea[2] - (parseInt (gridArea(21) + distance). toString);
-/*
-+ gridArea[e]: starting row
-* gridArea[2]: ending row
-* 50:
-*/
-* if the starting row is equal or bigger than ending row, it means you are moving the handle further than the size of the child.
-if (parseInt (gridArea[el) >- parseInt (gridAre[2])) gridArea[2] - (parseInt (gridArea[el) + 1). toString)
-let neighbor - this. GetNeighbor (child, axisEnum.y);
-1f (Ineighbor) return
-let neighborGridArea = getComputedStyle(neighbor) .gridArea.split(" / ")
-* watch this carefully:
-* neighbor is in the bottom side of the child.
-* SO:
- gridRowStart of the neighbor = gridRomEnd of the child
-*/
-this.ResizeGridArea(neighbor, [gridArea[2], neighborGridArea.J, neighborGridArea[2], neighbor@ridArea[311)
-break;
-1
-default:
-break:
-this.ResizeGridArea(child, gridArea);
 }
+
+
+
+
+
+
+
+
