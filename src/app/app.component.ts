@@ -23,3 +23,26 @@ export class AppComponent {
   }
 }
 
+ngOnDestroy): void {
+this.subscription.unsubscribe();
+@ViewChild('allMother', { static: true }) AlMother: ElementRef @ViewChild( 'controller', { static: true }) Controller: ElementRef @Input() gridConfig: IGridConfig;
+ngAfterViewInit() {
+// this.configValidator()
+this.pageGenerator0);
+this.basics = this .GetListOfCount();
+if ((this.gridConfig.Displayflode s this.moveController0);
+ContainerDisplayMode.normal))
+DI
+this.metadata. fields[ 'basic'].selectOptions$ = this.basics
+}
+/*
+* get list of elements to send to metadata
+* for controller box
+*/
+public GetListOfCount(): ( id: number; name: string: 303 (
+let count = Array.from((this.AllMother.nat iveElement as HTMLElement) children).filter(x => Ix.classList.contains("controller")). length;
+let types: {
+id: number;
+name: string;
+10] = Array. from( length: count J, (value, Index) => (( id: index + 1, name: index + 1 + '° ))) return types;
+
