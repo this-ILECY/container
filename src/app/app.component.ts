@@ -447,34 +447,62 @@ export class AppComponent implements OnDestroy, AfterViewInit {
           break;
       }
     }))
-    
+
+    const keyUp$ = fromEvent(document, 'mouseup')
+
+    this.subscription.add(keyUp$.pipe(take(1)).subscribe(() => {
+
+      this.NeighborInteractIon((e.target as HTMLElement))
+
+      handle.classList.add('op-0')
+
+      handle.style.left = 'unset'
+      handle.style.top = 'unset'
+
+
+      moveSubs.unsubscribe()
+    }))
   }
-}
-const keyUps = fromEvent (document, 'mouseup')
-this.subscription.add(keyUp$.pipe(take(1)).subscribe(() => {
-this.NeighborInteraction((e. target as HIMLELement))
-handle.classList.add('op-0')
-handle.style. left = 'unset'
-handle.style.top = 'unset'
-moveSubs. unsubscribe()
-}))
-* the sizing manager of non-dashboard container
-* it needs only the handle you dragged and caused the interaction i /
-NeighborInteractIon (handle: HTHLELement) {
-let distance; let gridArea;
-let child = handle. parentElement;
-switch Chandle.classList.contains('right")) B
-case true: {
-//distance here is space between handle and right side of its child distance - this .HandleDistanceCalculator (handle, axisEnum.x);
-distance = this.PixelToCel (distance, axisEnun.x)
-//1 get the gridArea of the child here and modify the 'gridColumnEnd value by adding the distance
-gridArea = getComputedStyle (child) .gridArea.split(" / ")
-gridArea[3] = (parseInt(gridArea[3J) + distance) . toString) ;
-* gridAre[1]: starting column
-* gridArea[3]: ending column
-* If the starting column 15 equal or bigger than ending column, it means you are moving the handle further than the size of the child.
-1f (parseInt (gridArea(11) »= parseint (gridArea[31)) gridArea[3] - (parseInt (gridArea(1)) + 1). toString)
-let neighbor = this. GetNeighbor (child, axisEnum.x);
-1f (Ineighbor) return
-let neighborGridArea = getComputedStyle(neighbor).gridArea.split(" / ")
+
+  /*
+  * the sizing manager of non - dashboard container
+  * it needs only the handle you dragged and caused the interaction 
+  */
+  NeighborInteractIon(handle: HTMLElement) {
+
+    let distance;
+    let gridArea;
+    let child = handle.parentElement;
+
+    switch (handle.classList.contains('right')) {
+      case true: {
+        //distance here is space between handle and right side of its child 
+        distance = this.HandleDistanceCalculator(handle, axisEnum.x);
+        distance = this.PixelToCel(distance, axisEnum.x)
+
+        //i get the gridArea of the child here and modify the 'gridColumnEnd value by adding the distance
+        gridArea = getComputedStyle(child!).gridArea.split(" / ")
+        gridArea[3] = (parseInt(gridArea[3]) + distance).toString();
+
+        /*
+        * gridArea[1]: starting column
+        * gridArea[3]: ending column
+        * 
+        * so:
+        * If the starting column 15 equal or bigger than ending column, it means you are moving the handle further than the size of the child. 
+        */
+        if (parseInt(gridArea[1]) >= parseInt(gridArea[3])) gridArea[3] = (parseInt(gridArea[1]) + 1).toString()
+
+        let neighbor = this.GetNeighbor(child, axisEnum.x);
+
+        if (!neighbor) return
+
+        let neighborGridArea = getComputedStyle(neighbor).gridArea.split(" / ")
+      }
+
+    }
+  }
+
+
+
 
