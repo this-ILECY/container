@@ -130,8 +130,8 @@ export class AppComponent implements OnDestroy, AfterViewInit {
 
     if (!this.gridConfig) return;
 
-    (allMother as HTMLElement).style.gridTemplateColumns = 'repeat(' + this.gridConfig.Resolution + ', 1fr)';
-    (allMother as HTMLElement).style.gridTemplateRows = 'repeat(' + this.gridConfig.ResolutionY + ', 1fr)'
+    (allMother as HTMLElement).style.gridTemplateColumns = 'repeat(' + this.gridConfig.Resolution + ', ifr)';
+    (allMother as HTMLElement).style.gridTemplateRows = 'repeat(' + this.gridConfig.ResolutionY + ', ifr)'
 
     if (this.gridConfig.ElementConfig.length = 0) return;
 
@@ -415,7 +415,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
   * called from 'handleGenerator' as mouse key down event
   * 50, e == key down mouse event and handle our Handle :)
   */
-  Handlerflover(e: MouseEvent, handle: HTMLElement) {
+  HandlerMover(e: MouseEvent, handle: HTMLElement) {
 
     let moveSubs = new Subscription();
 
@@ -548,7 +548,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
         break;
     }
 
-    this.ResizeGridArea(child, gridArea);
+    this.ResizeGridArea(child!, gridArea);
   }
 
   /*
@@ -671,7 +671,58 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     return list;
   }
 
-  
+  /*
+  * dashboard method of resizing the children.
+  * Inputs are the gridArea's row and column values
+  */
+  resize(elm: HTMLElement, axis: AxisEnum, rowStart: string, colStart: string, rowEnd: string, colEnd: string) {
+
+    if (parseInt(rowStart) < 0 || parseInt(rowEnd) < 0 || parseInt(colStart) < 0 || parseInt(colEnd) < 0) return
+
+    switch (axis) {
+      case AxisEnum.x: {
+
+        let Start = getComputedStyle(elm).gridRowStart;
+
+        if (colStart.length == 0) Start = Start + ' / ' + getComputedStyle(elm).gridColumnStart;
+        else Start = Start + ' / ' + colStart
+
+        let End = getComputedStyle(elm).gridRowEnd;
+        if (colEnd.length == 0) End = End
+        else End = End + ' / ' + (colEnd)
+
+        elm.style.gridArea = 'unset !important'
+        elm.style.gridArea = Start + End;
+        break;
+      }
+      case AxisEnum.y: {
+        let Start;
+        if (parseInt(rowStart) == 0) Start = getComputedStyle(elm).gridRowStart;
+        else Start = rowStart;
+
+        Start = Start + ' / ' + getComputedStyle(elm).gridColumnStart;
+
+        let End;
+        if (parseInt(rowEnd) == 0) End = getComputedStyle(elm).gridRowEnd;
+        else End = rowEnd;
+        End = End + ' / ' + getComputedStyle(elm).gridColumnEnd;
+
+        elm.style.gridArea = 'unset !important';
+        elm.style.gridArea = Start + ' / ' + End;
+        break;
+      }
+
+      default:
+        break;
+    }
+    // if (colEnd.length > 0 II colstart. length > 0) {
+
+    
+    // ) else if (rowStart. length > 0 II rowEnd. length > 0) {
+
+    //}
+  }
+
 }
 
 
@@ -680,46 +731,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
 
 
 
-T*
-* dashboard method of resizing the children.
-* Inputs are the gridArea's row and column values
-*/
-resize(eln: HI'LElement, axis: axisEnum, rowStart: string, colStart: string, rowEnd: string, colEnd: string) {
-1f (parseInt (rowStart) < 0 Il parseInt (rowEnd) < 0 Il parseInt (colStart) < 0 Il parseInt (colEnd) < 0) return
-switch (axis) {
-case axisEnum.x: {
-let Start = getComputedStyle(elm) .gridRowStart;
-1f (colstart. Length = 0) Start = Start + ' / ' + getComputedStyle(elm).gridColumnStart;
-else Start = Start +
-/ ' + colstart
-Let End = getComputedStyle(elm).gridRowEnd;
-1f (colEnd. Length == 0) End = End
-+
-else End = End +
-' + (colEnd)
-+ getComputedStyle(elm).gridColumnEnd;
-elm.style.gridArea = 'unset limportant*
-elm.style.gridArea = Start
-+ End;
-break;
-case axisEnum.y:
-let Start;
-1f (parseInt (rowStart) == 0) Start = getComputedStyle(elm).gridRowStart;
-else Start a rowStart
-Start = Start + • / • + getComputedStyle(elm) .gridColunnStart;
-let End;
-1f (parseInt (rowEnd) == 0) End e getComputedStyle(elm) .gridRowEnd;
-else End a rowEnd;
-End • End + • / • + getComputedStyle(elm) .gridColumnEnd
-elm.style.gridArea = 'unset [important':
-elm.style.gridArea = Start + ' / ° + End;
-break;
-default:
-break;
-}
-// 1f (colEnd.length > 0 II colstart. length > 0) {
-// ) else if (rowStart. length > 0 II rowEnd. length > 0) {
-//}
+
 
 
 
