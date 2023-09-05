@@ -779,7 +779,31 @@ export class AppComponent implements OnDestroy, AfterViewInit {
 
 
 
-
+* any interactions between children and controller box
+* (WORKS ONY ON NON-DASHBOARD)
+# / private selected: HIMLELement:
+selectedElement (e: Event) {
+const value = (e.target as HTMLSelectELement) .selectedOptions [0]. value;
+Array.from((this.AllMother .nativeElement as HTMLELement) .querySelectorALI(" basic")).forEach(element ->
+(element as HTMLELement).style.border = 'unset"
+const selectedElement - ((this.ALlMother.nat iveELement as HIMLELement). querySeLector(" .basic-" + value) as HIPLELement)
+selectedElement.style.border = '3px solid #45b6531
+this.selected = selectedElement
+const gridArea = getComputedStyle (selectedElement) .gridArea.split"
+// this.fg.get ('x'). setValue(gridArea[ol)
+// this.fg.get('y').setValue(gridArea[1])
+// this.fg.get ('xs').setValue(parseInt (gridArea [2]) - parseInt(gridArea [ol))
+//this.fg.get('ys').setvalue(parseInt(gridArea[3]) - parseInt (gridArea[1)))
+Let a = parseint (gridArea[0]);
+Let aa - parseInt (gridArea[1):
+this.fg.patchValue(
+{
+'x-axis': a,
+'y-axis': aa,
+'ys-axis*: parseInt (gridArea[21) - parseInt (gridArea[Ol),
+'ys-axis': parseInt (gridArea[31) - parseInt (gridArea[13),
+D:
+this.fg.controls['x-axis'].setValue(parseInt(gridArea[el))
 
 
 
