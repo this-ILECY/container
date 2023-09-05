@@ -389,7 +389,42 @@ export class AppComponent implements OnDestroy, AfterViewInit {
   }
 }
 
-
+switch (permission) {
+case undefined:
+case HandleDisplayEnum. all: ( element . appendChild (right)
+element.appendChild (bottom)
+break:
+case HandleDisplayEnum.y: (
+element. appendChild(bottom)
+break;
+case HandleDisplayEnum.x: {
+element. appendChild(right)
+break;
+case HandleDisplayEnum. none:
+default:
+break;
+/*
+* this method makes the handle move freely in the page
+* called from 'handleGenerator' as mouse key down event
+* 50, e == key down mouse event and handle our Handle :)
+* /
+Handlerflover(e: MouseEvent, handle: HIMLELement) {
+let moveSubs = new SubscriptionO;
+const allMother a this .Alliother. nativeElement as HTMLELement
+const move$ = fromEvent (document, 'mousemove')
+handle.classList.remove('op-0')
+moveSubs.add(move$.subscribe(move => {
+switch Chandle.classList.contains('right")) {
+I
+case true: {
+const child = (e.target as HTMLELement) .parentElLement.get BoundingCLientRectO.x;
+handle.style.left = ((move as MouseEvent).clientX - childX) + 'px*
+break;
+case false: (
+const navHeight = parseInt (getComputedStyle(document .querySelector(" , ray-navbar-home")) .height.replace("px", ""))
+const childy = (e.target as HITMLElement).parentELement. getBoundingCLIentRectO.y;
+const gap = getComputedStyle (allMother),gap
+handle.style. top - ((move as MouseEvent).clientY - navleight - childY + parseInt (gap) + 2) + 'px* break;
 
 
 
