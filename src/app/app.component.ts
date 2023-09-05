@@ -245,6 +245,23 @@ export class AppComponent {
 
 
 
-
+Are-rroncandessucnaLoren..forEachCelement=»
+Span .appendChild(element);
+const elementGridArea = (element as HTMLELement) .style.gridArea.split(" / ");
+getting parent's row and col from his children.
+* the very first rom and col is the smallest one
+* and the last col and row which contains all children, is the biggest one
+*/ gettingGrids:
+rorstart - rowstart > parseInt(elementGridArea[e) 2 parseInt (elementGridArea[el) : rowStart;
+colstart = colstart > parseInt(elementGridArea[11) 2 parseInt (elementGridArea[11) : colStart;
+TOmEnd = rowEnd < parseInt(elementGridArea [2) 7 parseInt(elementGridArea[2]) : rowEnd;
+colEnd = colEnd < parseInt (elementGridArea [31) ? parseInt (elementGridArea[3]) : colEnd;
+const elementCLasslist = Array.from(element .classList).find(x => x. includes("container-child-"))
+const containerClass = elementClasslist.split("-")
+parentConfig = this.gridConfig. ElementConfig. find(x => x. Parentid
+a parseInt (containerClass [21));
+this. relocateChildren (Array. from CindexedChildren.))
+1f (IparentConfig) return
+span.style gridArea - 'unset limportant
 
 
